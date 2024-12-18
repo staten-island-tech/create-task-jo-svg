@@ -10,7 +10,7 @@ function getRandomNumber(min, max) {
     //it calculates the 
 }
 const typesOfCards = [
-
+    
 ];
 const playerCards = [];
 const dealer = [];
