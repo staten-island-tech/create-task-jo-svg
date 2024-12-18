@@ -9,9 +9,11 @@ function getRandomNumber(min, max) {
     //Math.random() * (max - min + 1) results in a floating-point number between 0 (inclusive) and (max - min + 1) (exclusive)
     //it calculates the 
 }
+const typesOfCards = [
 
+];
 const playerCards = [];
-const botCards = [];
+const dealer = [];
 //Jacks, Queens, Kings and 10s count as 10
 function createCard(displayedCards){
     document.querySelector(".container").innerHTML = '';
