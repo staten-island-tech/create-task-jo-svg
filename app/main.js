@@ -27,6 +27,7 @@ function addCard(){
         console.log(getRandomNumber(1,100))
     })
 }
+ 
 addCard();
 //need a funciton to create the cards
 //need a fucntion for storage
