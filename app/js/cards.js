@@ -312,4 +312,6 @@ const cards = [
         "img": "https://path.to/images/King_of_Clubs.png"
       }
 ]
-  
+
+
+export {cards};
