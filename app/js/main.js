@@ -2,6 +2,7 @@ import {cards} from './cards';
 
 function callFunctions(){
     document.querySelector(".playerCards").innerHTML = '';
+    
 }
 function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -12,20 +13,22 @@ function getRandomNumber(min, max) {
 const playerCards = [];
 const dealer = [];
 //Jacks, Queens, Kings and 10s count as 10
-function createCard(containerClass){
+function createCard(containerClass, num){
     const container = document.querySelector(`.${containerClass}`);
     container.insertAdjacentHTML("beforeend",`
-        
-
+        <div class="card bg-slate-200 w-48 h-64 justify-center text-center mx-3">
+          <h1 class="text-8xl">${num}</h1>
+        </div>
         `);
 }
+
 function addCard(){
     const hitBtn = document.querySelector(".HIT");
     hitBtn.addEventListener('click', ()=>{
         console.log("New Card Is Added");
-        let newCard = getRandomNumber(1,10);
-        if (newCard){
-            console.log(newCard);
+        let newCardnum = getRandomNumber(1,10);
+        if (newCardnum){
+            createCard('playerCards', newCardnum);
         }
     })
 }
