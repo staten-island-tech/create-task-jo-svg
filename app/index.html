@@ -3,20 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
   </head>
   <body>
-    <div class="container">
+    <div class="dealerCards">
       
     </div>
-    <div class="dealerCards">
-      <div class="card w-12">
-        <h1>1</h1>
+    <div class="container absolute bottom-0 w-screen h-1/2 place-items-center">
+      <div class="playerCards">
+        <div class="card bg-slate-200 w-48 h-64 justify-center text-center">
+          <h1 class="text-8xl">1</h1>
+        </div>
       </div>
+      <button class="HIT bg-green-400">HIT</button>
+      <button class="STAY bg-red-600">STAY</button>
     </div>
-    <button class="HIT">HIT</button>
-    <button class="STAY">STAY</button>
+    
     <script type="module" src="./js/main.js"></script>
   </body>
 </html>
