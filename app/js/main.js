@@ -2,9 +2,9 @@ import {cards} from './cards';
 
 function callFunctions(){
     document.querySelector(".playerCards").innerHTML = '';
+    startGame();
     addPlayerCards(playerCards);
     console.log(playerCards);
-    addDealerCards(dealer);
     console.log(dealer);
     update();
     
@@ -18,6 +18,13 @@ function getRandomNumber(min, max) {
 const playerCards = [];
 const dealer = [];
 //Jacks, Queens, Kings and 10s count as 10
+function startGame(){
+    addCard(playerCards, "playerCards");
+    addCard(playerCards, "playerCards");
+    addCard(dealer, "dealerCards");
+    addCard(dealer, "dealerCards");
+
+}
 function createCard(containerClass, num){
     const container = document.querySelector(`.${containerClass}`);
     container.insertAdjacentHTML("beforeend",`
@@ -26,13 +33,13 @@ function createCard(containerClass, num){
         </div>
         `);
 }
-function addCard(personsCards){
+function addCard(personsCards, container){
     let newCardnum = getRandomNumber(1,10);
     let cardValue = newCardnum;
     if (newCardnum >= 10) {
         cardValue = 10;
     }
-    createCard('playerCards', cardValue);
+    createCard(container, cardValue);
     personsCards.push(cardValue);
     update();
 }
@@ -41,11 +48,10 @@ function addPlayerCards(personsCards){
     const hitBtn = document.querySelector(".HIT");
     hitBtn.addEventListener('click', ()=>{
         console.log("New Card Is Added");
-        addCard(personsCards);
+        addCard(personsCards, "playerCards");
     })
 }
 function addDealerCards(personsCards){
-    addCard(personsCards);
     
 }
 
@@ -59,6 +65,11 @@ function update(){
         dealervalue += dealer[i];
     }
     console.log(playervalue);
+    const score = document.querySelector(`.score`);
+    if (score.textContent != playervalue){
+        score.innerHTML = `SCORE: ${playervalue}`
+    }
+    
     if (playervalue > 21){
         console.log("you lose!");
         document.querySelector(".HIT").disabled = true;
