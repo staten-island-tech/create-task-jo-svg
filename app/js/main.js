@@ -20,31 +20,47 @@ function dealerTurn() {
     while (dealervalue < 17 && !gameOver && turn == 'dealer') {
         addCard(dealer, "dealerCards");
         turn = 'player'
-    
+        
     }
     if (dealervalue > 21) {
-        console.log("Dealer busts, you win!");
+        document.querySelector('.winner').insertAdjacentHTML('beforeend', `
+            <h1 class="text-8xl">Dealer busts, you win!</h1> `);
         gameOver = true;
+        document.querySelector(".STAY").disabled = true;
         return;
+    }
+    if (dealervalue > 17){
+        turn = 'player'
     }
     update();
 }
 function checkWinner() {
     if (playervalue > 21) {
-        console.log("You lose! Player over 21.");
+        document.querySelector('.winner').insertAdjacentHTML('beforeend', `
+            <h1 class="text-8xl">You lose! Player over 21.</h1> `);
         gameOver = true;
+        document.querySelector(".STAY").disabled = true;
+
     } else if (dealervalue > 21) {
-        console.log("You win! Dealer over 21.");
+        document.querySelector('.winner').insertAdjacentHTML('beforeend', `
+            <h1 class="text-8xl">You win! Dealer over 21.</h1> `);
         gameOver = true;
+        document.querySelector(".STAY").disabled = true;
     } else if (playervalue > dealervalue) {
-        console.log("You win!");
+        document.querySelector('.winner').insertAdjacentHTML('beforeend', `
+            <h1 class="text-8xl">You win!</h1> `);
         gameOver = true;
+        document.querySelector(".STAY").disabled = true;
     } else if (playervalue < dealervalue) {
-        console.log("You lose! Dealer wins.");
+        document.querySelector('.winner').insertAdjacentHTML('beforeend', `
+            <h1 class="text-8xl">You lose! Dealer wins.</h1> `);
         gameOver = true;
+        document.querySelector(".STAY").disabled = true;
     } else {
-        console.log("It's a tie!");
+        document.querySelector('.winner').insertAdjacentHTML('beforeend', `
+            <h1 class="text-8xl">It's a tie!</h1> `);
         gameOver = true;
+        document.querySelector(".STAY").disabled = true;
     }
 }
 function getRandomNumber(min, max) {
@@ -86,6 +102,12 @@ function addPlayerCards(personsCards) {
             update();
             turn = 'dealer';
             dealerTurn();
+        }
+        if (playervalue > 21) {
+            document.querySelector('.winner').insertAdjacentHTML('beforeend', `
+                <h1 class="text-8xl">Over 21, you lose!</h1> `);
+            gameOver = true;
+            return;
         }
 
     });
