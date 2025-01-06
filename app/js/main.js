@@ -31,8 +31,6 @@ function dealerTurn() {
     }
     update();
 }
-
-
 function checkWinner() {
     if (playervalue > 21) {
         console.log("You lose! Player over 21.");
@@ -51,14 +49,12 @@ function checkWinner() {
         gameOver = true;
     }
 }
-
 function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
     //math.floor rounds the number which removes the decimal 
     //math.random generates a random floating-point number between 0 (inclusive) and 1 (exclusive)
     //Math.random() * (max - min + 1) results in a floating-point number between 0 (inclusive) and (max - min + 1) (exclusive)
 }
-
 function startGame(){
     addCard(playerCards, "playerCards");
     addCard(playerCards, "playerCards");
@@ -84,7 +80,6 @@ function addCard(personsCards, container){
     personsCards.push(cardValue);
     update();
 }
-
 function addPlayerCards(personsCards) {
     const hitBtn = document.querySelector(".HIT");
     hitBtn.addEventListener('click', () => {
@@ -98,9 +93,6 @@ function addPlayerCards(personsCards) {
     });
 }
 
-function addDealerCards(personsCards){
-    
-}
 function checkValue(){
     playervalue = 0; 
     dealervalue = 0;
