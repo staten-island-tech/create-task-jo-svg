@@ -8,26 +8,24 @@ function callFunctions(){
     document.querySelector(".playerCards").innerHTML = '';
     startGame();
     addPlayerCards(playerCards);
-    
-    console.log(playervalue);
-    console.log(dealervalue);
     const stand = document.querySelector('.STAY');
     stand.addEventListener('click', () => {
         document.querySelector(".HIT").disabled = true;
         dealerTurn();
         checkWinner();
     });
-    /* while (gameOver = false){
-        if (dealervalue > 21){
-            checkWinner();
-        }
-    } */
     
 }
 function dealerTurn() {
     while (dealervalue < 17 && !gameOver && turn == 'dealer') {
         addCard(dealer, "dealerCards");
         turn = 'player'
+    
+    }
+    if (dealervalue > 21) {
+        console.log("Dealer busts, you win!");
+        gameOver = true;
+        return;
     }
     update();
 }
