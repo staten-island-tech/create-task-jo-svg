@@ -1,23 +1,64 @@
-import {cards} from './cards';
-
+let playervalue = 0;
+let dealervalue = 0;
+let turn = 'player';
+let gameOver = false;
+const playerCards = [];
+const dealer = [];
 function callFunctions(){
     document.querySelector(".playerCards").innerHTML = '';
     startGame();
     addPlayerCards(playerCards);
-    console.log(playerCards);
-    console.log(dealer);
-    update();
+    
+    console.log(playervalue);
+    console.log(dealervalue);
+    const stand = document.querySelector('.STAY');
+    stand.addEventListener('click', () => {
+        document.querySelector(".HIT").disabled = true;
+        dealerTurn();
+        checkWinner();
+    });
+    /* while (gameOver = false){
+        if (dealervalue > 21){
+            checkWinner();
+        }
+    } */
     
 }
+function dealerTurn() {
+    while (dealervalue < 17 && !gameOver && turn == 'dealer') {
+        addCard(dealer, "dealerCards");
+        turn = 'player'
+    }
+    update();
+}
+
+
+function checkWinner() {
+    if (playervalue > 21) {
+        console.log("You lose! Player over 21.");
+        gameOver = true;
+    } else if (dealervalue > 21) {
+        console.log("You win! Dealer over 21.");
+        gameOver = true;
+    } else if (playervalue > dealervalue) {
+        console.log("You win!");
+        gameOver = true;
+    } else if (playervalue < dealervalue) {
+        console.log("You lose! Dealer wins.");
+        gameOver = true;
+    } else {
+        console.log("It's a tie!");
+        gameOver = true;
+    }
+}
+
 function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
     //math.floor rounds the number which removes the decimal 
     //math.random generates a random floating-point number between 0 (inclusive) and 1 (exclusive)
     //Math.random() * (max - min + 1) results in a floating-point number between 0 (inclusive) and (max - min + 1) (exclusive)
 }
-const playerCards = [];
-const dealer = [];
-//Jacks, Queens, Kings and 10s count as 10
+
 function startGame(){
     addCard(playerCards, "playerCards");
     addCard(playerCards, "playerCards");
@@ -44,44 +85,46 @@ function addCard(personsCards, container){
     update();
 }
 
-function addPlayerCards(personsCards){
+function addPlayerCards(personsCards) {
     const hitBtn = document.querySelector(".HIT");
-    hitBtn.addEventListener('click', ()=>{
-        console.log("New Card Is Added");
-        addCard(personsCards, "playerCards");
-    })
+    hitBtn.addEventListener('click', () => {
+        if (turn === 'player' && !gameOver) { 
+            addCard(personsCards, "playerCards");
+            update();
+            turn = 'dealer';
+            dealerTurn();
+        }
+
+    });
 }
+
 function addDealerCards(personsCards){
     
 }
-
-function update(){
-    let playervalue = 0; 
-    let dealervalue = 0;
+function checkValue(){
+    playervalue = 0; 
+    dealervalue = 0;
     for (let i=0; i < playerCards.length; i++){
         playervalue += playerCards[i];
     }
     for (let i=0; i < dealer.length; i++){
         dealervalue += dealer[i];
     }
-    console.log(playervalue);
-    const score = document.querySelector(`.score`);
-    if (score.textContent != playervalue){
-        score.innerHTML = `SCORE: ${playervalue}`
-    }
-    
-    if (playervalue > 21){
-        console.log("you lose!");
-        document.querySelector(".HIT").disabled = true;
-    }
-    
-    /* if (dealervalue > 21 || playervalue > dealervalue){
-        console.log("you win!");
-        document.querySelector(".HIT").disabled = true;
-    } */
 }
+function update(){
+    checkValue();
+    const score = document.querySelector(`.score`);
+    score.innerHTML = `SCORE: ${playervalue}`;
+    
+    if (playervalue > 21) {
+        console.log("Player busts, you lose!");
+        gameOver = true;
+    }
+
+    if (gameOver) {
+        document.querySelector(".HIT").disabled = true; 
+    }
+}
+
 callFunctions();
 
-//need a funciton to create the cards
-//need a fucntion for storage
-//need a function for all the cards 
