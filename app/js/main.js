@@ -11,16 +11,18 @@ function callFunctions(){
     const stand = document.querySelector('.STAY');
     stand.addEventListener('click', () => {
         document.querySelector(".HIT").disabled = true;
-        dealerTurn();
-        checkWinner();
+        dealerTurn();   
     });
-    
 }
 function dealerTurn() {
     while (dealervalue < 17 && !gameOver && turn == 'dealer') {
         addCard(dealer, "dealerCards");
-        turn = 'player'
-        
+        if (document.querySelector(".HIT").disabled == false){
+            turn = 'player'
+        }
+        else{
+            dealerTurn();
+        }
     }
     if (dealervalue > 21) {
         document.querySelector('.winner').insertAdjacentHTML('beforeend', `
@@ -74,7 +76,6 @@ function startGame(){
     addCard(playerCards, "playerCards");
     addCard(dealer, "dealerCards");
     addCard(dealer, "dealerCards");
-
 }
 function createCard(containerClass, num){
     const container = document.querySelector(`.${containerClass}`);
@@ -82,7 +83,7 @@ function createCard(containerClass, num){
         <div class="card bg-slate-200 w-48 h-64 justify-center text-center">
           <h1 class="text-8xl">${num}</h1>
         </div>
-        `);
+    `);
 }
 function addCard(personsCards, container){
     let newCardnum = getRandomNumber(1,10);
@@ -109,10 +110,8 @@ function addPlayerCards(personsCards) {
             gameOver = true;
             return;
         }
-
     });
 }
-
 function checkValue(){
     playervalue = 0; 
     dealervalue = 0;
@@ -127,16 +126,13 @@ function update(){
     checkValue();
     const score = document.querySelector(`.score`);
     score.innerHTML = `SCORE: ${playervalue}`;
-    
     if (playervalue > 21) {
         console.log("Player busts, you lose!");
         gameOver = true;
     }
-
     if (gameOver) {
         document.querySelector(".HIT").disabled = true; 
     }
 }
 
 callFunctions();
-
