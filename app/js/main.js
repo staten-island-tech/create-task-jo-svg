@@ -4,6 +4,7 @@ let turn = 'player';
 let gameOver = false;
 const playerCards = [];
 const dealer = [];
+const dealerDelay = 1000;
 function callFunctions(){
     document.querySelector(".playerCards").innerHTML = '';
     startGame();
@@ -11,28 +12,35 @@ function callFunctions(){
     const stand = document.querySelector('.STAY');
     stand.addEventListener('click', () => {
         document.querySelector(".HIT").disabled = true;
+        turn = 'dealer';
+        console.log(turn)
         dealerTurn();   
+    
     });
 }
 function dealerTurn() {
-    while (dealervalue < 17 && !gameOver && turn == 'dealer') {
-        addCard(dealer, "dealerCards");
-        if (document.querySelector(".HIT").disabled == false){
-            turn = 'player'
-        }
-        else{
-            dealerTurn();
-        }
+    if (dealervalue < 17 && !gameOver && turn == 'dealer') {
+        setTimeout(() => {
+            addCard(dealer, "dealerCards"); 
+            if (dealervalue < 17) {
+                dealerTurn(); 
+            } else {
+                checkWinner(); 
+            }
+            
+        }, 10); 
     }
     if (dealervalue > 21) {
-        document.querySelector('.winner').insertAdjacentHTML('beforeend', `
-            <h1 class="text-8xl">Dealer busts, you win!</h1> `);
+        checkWinner();
         gameOver = true;
         document.querySelector(".STAY").disabled = true;
         return;
     }
-    if (dealervalue > 17){
-        turn = 'player'
+    else if (dealervalue >= 17 && document.querySelector(".HIT").disabled === true){
+        checkWinner();
+    }
+    else{
+        turn = 'player';
     }
     update();
 }
