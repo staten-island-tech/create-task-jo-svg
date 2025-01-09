@@ -1,10 +1,8 @@
 let playervalue = 0;
 let dealervalue = 0;
-let turn = 'player';
 let gameOver = false;
 const playerCards = [];
 const dealer = [];
-const dealerDelay = 1000;
 function callFunctions(){
     document.querySelector(".playerCards").innerHTML = '';
     startGame();
@@ -12,37 +10,23 @@ function callFunctions(){
     const stand = document.querySelector('.STAY');
     stand.addEventListener('click', () => {
         document.querySelector(".HIT").disabled = true;
-        turn = 'dealer';
-        console.log(turn)
         dealerTurn();   
-    
     });
 }
 function dealerTurn() {
-    if (dealervalue < 17 && !gameOver && turn == 'dealer') {
-        setTimeout(() => {
-            addCard(dealer, "dealerCards"); 
-            if (dealervalue < 17) {
-                dealerTurn(); 
-            } else {
-                checkWinner(); 
-            }
-            
-        }, 10); 
-    }
-    if (dealervalue > 21) {
-        checkWinner();
-        gameOver = true;
-        document.querySelector(".STAY").disabled = true;
-        return;
-    }
-    else if (dealervalue >= 17 && document.querySelector(".HIT").disabled === true){
-        checkWinner();
-    }
-    else{
-        turn = 'player';
-    }
-    update();
+    document.querySelector(".STAY").disabled = true;
+
+    const dealerInterval = setInterval(() => {
+        if (dealervalue < 17 && !gameOver) {
+            addCard(dealer, "dealerCards");
+            update();
+        }
+        else {
+            clearInterval(dealerInterval); // Stop the interval once dealer's value is 17 or higher
+            checkWinner();
+        }
+    }, 1000);
+
 }
 function checkWinner() {
     if (playervalue > 21) {
@@ -81,7 +65,7 @@ function getRandomNumber(min, max) {
 }
 function startGame(){
     addCard(playerCards, "playerCards");
-    addCard(playerCards, "playerCards");
+    addCard(playerCards, "playerCards");    
     addCard(dealer, "dealerCards");
     addCard(dealer, "dealerCards");
 }
@@ -106,11 +90,9 @@ function addCard(personsCards, container){
 function addPlayerCards(personsCards) {
     const hitBtn = document.querySelector(".HIT");
     hitBtn.addEventListener('click', () => {
-        if (turn === 'player' && !gameOver) { 
+        if (!gameOver) { 
             addCard(personsCards, "playerCards");
             update();
-            turn = 'dealer';
-            dealerTurn();
         }
         if (playervalue > 21) {
             document.querySelector('.winner').insertAdjacentHTML('beforeend', `
