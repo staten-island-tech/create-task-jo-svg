@@ -59,9 +59,6 @@ function checkWinner() {
 }
 function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-    //math.floor rounds the number which removes the decimal 
-    //math.random generates a random floating-point number between 0 (inclusive) and 1 (exclusive)
-    //Math.random() * (max - min + 1) results in a floating-point number between 0 (inclusive) and (max - min + 1) (exclusive)
 }
 function startGame(){
     addCard(playerCards, "playerCards");
