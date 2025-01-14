@@ -3,31 +3,41 @@ let dealervalue = 0;
 let gameOver = false;
 const playerCards = [];
 const dealer = [];
-function callFunctions(){
+function callFunctions() {
     document.querySelector(".playerCards").innerHTML = '';
     startGame();
     addPlayerCards(playerCards);
+
     const stand = document.querySelector('.STAY');
     stand.addEventListener('click', () => {
         document.querySelector(".HIT").disabled = true;
-        dealerTurn();   
+        stand.disabled = true; 
+        dealerTurn(dealer, 17); 
     });
 }
-function dealerTurn() {
-    document.querySelector(".STAY").disabled = true;
 
-    const dealerInterval = setInterval(() => {
-        if (dealervalue < 17 && !gameOver) {
-            addCard(dealer, "dealerCards");
-            update();
+function dealerTurn(deck, threshold) {
+    while (dealervalue < threshold && !gameOver) {
+        addCard(deck, "dealerCards");
+        update();
+        if (dealervalue > 21) {
+            document.querySelector('.winner').insertAdjacentHTML('beforeend', `
+                <h1 class="text-8xl">Dealer busts! You win!</h1>
+            `);
+            gameOver = true;
+            break;
         }
-        else {
-            clearInterval(dealerInterval); // Stop the interval once dealer's value is 17 or higher
-            checkWinner();
-        }
-    }, 1000);
+    }
 
+    if (!gameOver) {
+        checkWinner();
+    }
+
+    deck.forEach((card, index) => {
+        console.log(`Dealer's Card ${index + 1}: ${card}`);
+    });
 }
+
 function checkWinner() {
     if (playervalue > 21) {
         document.querySelector('.winner').insertAdjacentHTML('beforeend', `
@@ -74,12 +84,9 @@ function createCard(containerClass, num){
         </div>
     `);
 }
-function addCard(personsCards, container){
-    let newCardnum = getRandomNumber(1,10);
-    let cardValue = newCardnum;
-    if (newCardnum >= 10) {
-        cardValue = 10;
-    }
+function addCard(personsCards, container) {
+    let newCardnum = getRandomNumber(1, 10);
+    let cardValue = newCardnum >= 10 ? 10 : newCardnum;
     createCard(container, cardValue);
     personsCards.push(cardValue);
     update();
@@ -116,10 +123,7 @@ function update(){
     if (playervalue > 21) {
         console.log("Player busts, you lose!");
         gameOver = true;
-    }
-    if (gameOver) {
-        document.querySelector(".HIT").disabled = true; 
+        document.querySelector(".HIT").disabled = true;
     }
 }
-
 callFunctions();
