@@ -3,6 +3,13 @@ let dealervalue = 0;
 let gameOver = false;
 const playerCards = [];
 const dealer = [];
+function startGame(){
+    addCard(playerCards, "playerCards");
+    addCard(playerCards, "playerCards");    
+    addCard(dealer, "dealerCards");
+    addCard(dealer, "dealerCards");
+}
+
 function callFunctions() {
     document.querySelector(".playerCards").innerHTML = '';
     startGame();
@@ -28,11 +35,9 @@ function dealerTurn(deck, threshold) {
             break;
         }
     }
-
     if (!gameOver) {
         checkWinner();
     }
-
     deck.forEach((card, index) => {
         console.log(`Dealer's Card ${index + 1}: ${card}`);
     });
@@ -69,12 +74,6 @@ function checkWinner() {
 }
 function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-function startGame(){
-    addCard(playerCards, "playerCards");
-    addCard(playerCards, "playerCards");    
-    addCard(dealer, "dealerCards");
-    addCard(dealer, "dealerCards");
 }
 function createCard(containerClass, num){
     const container = document.querySelector(`.${containerClass}`);
